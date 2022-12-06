@@ -1,6 +1,6 @@
 import tkinter.ttk
 from tkinter import *
-
+import math
 
 root = Tk()
 root.title('Scientific Calculator')
@@ -19,7 +19,8 @@ memory = 0
 
 
 def handle_equal():
-    second_number = MainInput.get()
+    second_number = float(MainInput.get())
+
     MainInput.delete(0, END)
 
     global math_type
@@ -27,14 +28,21 @@ def handle_equal():
     if math_type == "":
         MainInput.insert(0, str(second_number))
     if math_type == "add":
-        MainInput.insert(0, str(f_number + float(second_number)))
+        MainInput.insert(0, str(f_number + second_number))
     if math_type == "subtract":
-        MainInput.insert(0, str(f_number - float(second_number)))
+        MainInput.insert(0, str(f_number - second_number))
     if math_type == "divide":
-        MainInput.insert(0, str(f_number / float(second_number)))
+        MainInput.insert(0, str(f_number / second_number))
     if math_type == "multiply":
-        MainInput.insert(0, str(f_number * float(second_number)))
-
+        MainInput.insert(0, str(f_number * second_number))
+    if math_type == "raised":
+        MainInput.insert(0, str(math.pow(f_number, second_number)))
+    if math_type == "one_split":
+        MainInput.insert(0, str(f_number * 1/second_number))
+    if math_type == "square_num":
+        MainInput.insert(0, str(math.pow(second_number, (1. / f_number))))
+    if math_type == "log":
+        MainInput.insert(0, str(math.log(f_number, second_number)))
     math_type = ""
     global equal_lts_button
     equal_lts_button = True
@@ -172,6 +180,138 @@ def validate_entry(s):
         return False
 
 
+def handle_raised_two():
+    current_value = MainInput.get()
+
+    MainInput.delete(0, END)
+
+    MainInput.insert(0, math.pow(float(current_value), 2))
+
+    global equal_lts_button
+    equal_lts_button = True
+
+
+def handle_raised_three():
+    current_value = MainInput.get()
+
+    MainInput.delete(0, END)
+
+    MainInput.insert(0, math.pow(float(current_value), 2))
+
+    global equal_lts_button
+    equal_lts_button = True
+
+
+def handle_raised_number_to_number():
+    first_number = MainInput.get()
+
+    global f_number
+    global math_type
+    math_type = "raised"
+    f_number = float(first_number)
+
+    MainInput.delete(0, END)
+    global equal_lts_button
+    equal_lts_button = False
+
+
+def handle_ten_raised():
+    current_value = MainInput.get()
+
+    MainInput.delete(0, END)
+
+    print(math.pow(float(current_value), 3))
+    MainInput.insert(0, math.pow(10, float(current_value)))
+
+    global equal_lts_button
+    equal_lts_button = True
+
+
+def handle_one_split_to():
+    first_number = MainInput.get()
+
+    global f_number
+    global math_type
+    math_type = "one_split"
+    f_number = float(first_number)
+
+    MainInput.delete(0, END)
+    global equal_lts_button
+    equal_lts_button = False
+
+
+def handle_square(square_type: float):
+    current_value = float(MainInput.get())
+
+    MainInput.delete(0, END)
+
+    MainInput.insert(0, str(math.pow(current_value, (1. / square_type))))
+
+    global equal_lts_button
+    equal_lts_button = True
+
+
+def handle_square_number():
+    first_number = MainInput.get()
+
+    global f_number
+    global math_type
+    math_type = "square_num"
+    f_number = float(first_number)
+
+
+    MainInput.delete(0, END)
+    global equal_lts_button
+    equal_lts_button = False
+
+
+def handle_angle(angle_type: str):
+    current_value = float(MainInput.get())
+
+    MainInput.delete(0, END)
+    print(angle_type)
+    match angle_type:
+        case 'sin':
+            MainInput.insert(0, str(math.sin(math.radians(current_value))))
+        case 'cos':
+            MainInput.insert(0, str(math.cos(math.radians(current_value))))
+        case 'tan':
+            MainInput.insert(0, str(math.tan(math.radians(current_value))))
+        case 'sinh':
+            MainInput.insert(0, str(math.sinh(current_value)))
+        case 'cosh':
+            MainInput.insert(0, str(math.cosh(current_value)))
+        case 'tanh':
+            MainInput.insert(0, str(math.tanh(current_value)))
+
+    global equal_lts_button
+    equal_lts_button = True
+
+
+def handle_log():
+    current_value = float(MainInput.get())
+
+    MainInput.delete(0, END)
+
+    MainInput.insert(0, math.log10(current_value))
+
+    global equal_lts_button
+    equal_lts_button = True
+
+
+def handle_log_base():
+    first_number = MainInput.get()
+
+    global f_number
+    global math_type
+    math_type = "log"
+    f_number = float(first_number)
+
+    MainInput.delete(0, END)
+    global equal_lts_button
+    equal_lts_button = False
+
+
 vcm = (root.register(validate_entry), "%S")
 
 
@@ -267,42 +407,83 @@ percent_button = Button(root, main_button_style, text="%")
 change_operator_button = Button(root, main_button_style, text="+/-")
 
 #Sci buttons
+
+#memory
 memory_plus = Button(root, sci_button_style, text="M+", command=handle_memory_plus)
 memory_minus = Button(root, sci_button_style, text="M-", command=handle_memory_minus)
 memory_recall = Button(root, sci_button_style, text="MR", command=handle_memory_registry)
 memory_clear = Button(root, sci_button_style, text="MC", command=handle_memory_clean)
 
+#raised
+number_raised_to_two = Button(root, sci_button_style, text="X²", command=handle_raised_two)
+number_raised_to_three = Button(root, sci_button_style, text="X³", command=handle_raised_three)
+number_raised_to_number = Button(root, sci_button_style, text="x^y", command=handle_raised_number_to_number)
+one_split_button = Button(root, sci_button_style, text="1/x", command=handle_one_split_to)
+ten_raised_to_number = Button(root, sci_button_style, text="10^x", command=handle_ten_raised)
 
-MainInput.grid(row=0, column=0, columnspan=4, ipady=20,sticky="W")
+#square
+square_cubic = Button(root, sci_button_style, text="³√x", command=lambda: handle_square(3.0))
+square = Button(root, sci_button_style, text="²√x", command=lambda: handle_square(2.0))
+square_number = Button(root, sci_button_style, text="x√y", command=handle_square_number)
+
+#angles
+sin = Button(root, sci_button_style, text="sin", command=lambda: handle_angle('sin'))
+cos = Button(root, sci_button_style, text="cos", command=lambda: handle_angle('cos'))
+tan = Button(root, sci_button_style, text="tan", command=lambda: handle_angle('tan'))
+sinh = Button(root, sci_button_style, text="sinh", command=lambda: handle_angle('sinh'))
+cosh = Button(root, sci_button_style, text="cosh", command=lambda: handle_angle('cosh'))
+tanh = Button(root, sci_button_style, text="tanh", command=lambda: handle_angle('tanh'))
+
+#log
+log = Button(root, sci_button_style, text="log10", command=handle_log)
+log_base_diff = Button(root, sci_button_style, text="log(a,b)", command=handle_log_base)
+
+MainInput.grid(row=0, column=0, columnspan=4, ipady=20, sticky="W")
 memory_sign.grid(row=0, column=3)
 
-memory_plus.grid(row=1, column=0)
-memory_minus.grid(row=1, column=1)
-memory_recall.grid(row=1, column=2)
-memory_clear.grid(row=1, column=3)
+memory_clear.grid(row=1, column=0)
+memory_plus.grid(row=1, column=1)
+memory_minus.grid(row=1, column=2)
+memory_recall.grid(row=1, column=3)
 on_off_button.grid(row=1, column=4)
 percent_button.grid(row=1, column=5)
 change_operator_button.grid(row=1, column=6)
 divide_button.grid(row=1, column=7)
 
-button_7.grid(row=2, column=0)
-button_8.grid(row=2, column=1)
-button_9.grid(row=2, column=2)
-multiply_button.grid(row=2, column=3)
+number_raised_to_two.grid(row=2, column=0)
+number_raised_to_three.grid(row=2, column=1)
+number_raised_to_number.grid(row=2, column=2)
+ten_raised_to_number.grid(row=2, column=3)
+button_7.grid(row=2, column=4)
+button_8.grid(row=2, column=5)
+button_9.grid(row=2, column=6)
+multiply_button.grid(row=2, column=7)
 
-button_4.grid(row=3, column=0)
-button_5.grid(row=3, column=1)
-button_6.grid(row=3, column=2)
-subtract_button.grid(row=3, column=3)
+one_split_button.grid(row=3, column=0)
+square.grid(row=3, column=1)
+square_cubic.grid(row=3, column=2)
+square_number.grid(row=3, column=3)
+button_4.grid(row=3, column=4)
+button_5.grid(row=3, column=5)
+button_6.grid(row=3, column=6)
+subtract_button.grid(row=3, column=7)
 
-button_1.grid(row=4, column=0)
-button_2.grid(row=4, column=1)
-button_3.grid(row=4, column=2)
-add_button.grid(row=4, column=3)
+sin.grid(row=4, column=0)
+cos.grid(row=4, column=1)
+tan.grid(row=4, column=2)
+log.grid(row=4, column=3)
+button_1.grid(row=4, column=4)
+button_2.grid(row=4, column=5)
+button_3.grid(row=4, column=6)
+add_button.grid(row=4, column=7)
 
-button_0.grid(row=5, column=0)
-eq_segundo_gr.grid(row=5, column=1)
-clear_button.grid(row=5, column=2)
-equal_button.grid(row=5, column=3)
+sinh.grid(row=5, column=0)
+cosh.grid(row=5, column=1)
+tanh.grid(row=5, column=2)
+log_base_diff.grid(row=5, column=3)
+eq_segundo_gr.grid(row=5, column=4)
+button_0.grid(row=5, column=5)
+clear_button.grid(row=5, column=6)
+equal_button.grid(row=5, column=7)
 
 root.mainloop()

@@ -6,170 +6,209 @@ root = Tk()
 root.title('Scientific Calculator')
 root["bg"] = "black"
 
+root.geometry('1300x556+200+200')
 root.grid_rowconfigure(5, minsize=65)
+root.overrideredirect(True)
 
 #root.resizable(False, False)
 
 
 f_number: float
+second_number: float
 math_type = ""
 equal_lts_button = False
 memory_sign_text = StringVar()
 memory = 0
 
 
+def handle_off():
+    root.destroy()
+
+
 def handle_equal():
-    second_number = float(MainInput.get())
+    try:
 
-    MainInput.delete(0, END)
+        global second_number
+        second_number = float(MainInput.get())
 
-    global math_type
+        MainInput.delete(0, END)
 
-    if math_type == "":
-        MainInput.insert(0, str(second_number))
-    if math_type == "add":
-        MainInput.insert(0, str(f_number + second_number))
-    if math_type == "subtract":
-        MainInput.insert(0, str(f_number - second_number))
-    if math_type == "divide":
-        MainInput.insert(0, str(f_number / second_number))
-    if math_type == "multiply":
-        MainInput.insert(0, str(f_number * second_number))
-    if math_type == "raised":
-        MainInput.insert(0, str(math.pow(f_number, second_number)))
-    if math_type == "one_split":
-        MainInput.insert(0, str(f_number * 1/second_number))
-    if math_type == "square_num":
-        MainInput.insert(0, str(math.pow(second_number, (1. / f_number))))
-    if math_type == "log":
-        MainInput.insert(0, str(math.log(f_number, second_number)))
-    math_type = ""
-    global equal_lts_button
-    equal_lts_button = True
+        global math_type
+
+        if math_type == "":
+            MainInput.insert(0, str(second_number))
+        if math_type == "add":
+            MainInput.insert(0, str(f_number + second_number))
+        if math_type == "subtract":
+            MainInput.insert(0, str(f_number - second_number))
+        if math_type == "divide":
+            MainInput.insert(0, str(f_number / second_number))
+        if math_type == "multiply":
+            MainInput.insert(0, str(f_number * second_number))
+        if math_type == "raised":
+            MainInput.insert(0, str(math.pow(f_number, second_number)))
+        if math_type == "one_split":
+            MainInput.insert(0, str(f_number * 1/second_number))
+        if math_type == "square_num":
+            MainInput.insert(0, str(math.pow(second_number, (1. / f_number))))
+        if math_type == "log":
+            MainInput.insert(0, str(math.log(f_number, second_number)))
+        math_type = ""
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 
 def handle_divide_button():
-    first_number = MainInput.get()
+    try:
 
-    global f_number
-    global math_type
-    math_type = "divide"
-    f_number = float(first_number)
+        first_number = MainInput.get()
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
+        global f_number
+        global math_type
+        math_type = "divide"
+        f_number = float(first_number)
 
+        MainInput.delete(0, END)
+        global equal_lts_button
+        equal_lts_button = False
+    except:
+        print('error')
 
 def handle_multiply_button():
-    first_number = MainInput.get()
+    try:
 
-    global f_number
-    global math_type
-    math_type = "multiply"
-    f_number = float(first_number)
+        first_number = MainInput.get()
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
+        global f_number
+        global math_type
+        math_type = "multiply"
+        f_number = float(first_number)
 
+        MainInput.delete(0, END)
+        global equal_lts_button
+        equal_lts_button = False
+    except:
+        print('error')
 
 def handle_subtract_button():
-    first_number = MainInput.get()
+    try:
 
-    global f_number
-    global math_type
-    math_type = "subtract"
-    f_number = float(first_number)
+        first_number = MainInput.get()
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
+        global f_number
+        global math_type
+        math_type = "subtract"
+        f_number = float(first_number)
 
+        MainInput.delete(0, END)
+        global equal_lts_button
+        equal_lts_button = False
+    except:
+        print('error')
 
 def handle_add_button():
-    first_number = MainInput.get()
+    try:
 
-    global f_number
-    global math_type
-    math_type = "add"
-    f_number = float(first_number)
+        first_number = MainInput.get()
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
+        global f_number
+        global math_type
+        math_type = "add"
+        f_number = float(first_number)
 
-
-def handle_button_click(number):
-    current_value = MainInput.get()
-
-    MainInput.delete(0, END)
-
-    global equal_lts_button
-
-    if equal_lts_button:
+        MainInput.delete(0, END)
+        global equal_lts_button
         equal_lts_button = False
-        MainInput.insert(0, str(number))
 
-    else:
-        MainInput.insert(0, str(current_value) + str(number))
+    except:
+        print('error')
+def handle_button_click(number):
+    try:
 
+        current_value = MainInput.get()
+
+        MainInput.delete(0, END)
+
+        global equal_lts_button
+
+        if equal_lts_button:
+            equal_lts_button = False
+            MainInput.insert(0, str(number))
+
+        else:
+            MainInput.insert(0, str(current_value) + str(number))
+    except:
+        print('error')
 
 def handle_clear_button():
     MainInput.delete(0, END)
 
 
 def handle_memory_plus():
-    current_value = MainInput.get()
+    try:
 
-    memory_sign_text.set('M')
+        current_value = MainInput.get()
 
-    global memory
+        memory_sign_text.set('M')
 
-    print(float(current_value))
-    print(memory)
+        global memory
 
-    memory = memory + float(current_value)
+        print(float(current_value))
+        print(memory)
 
-    MainInput.delete(0, END)
-    MainInput.insert(0, str(memory))
+        memory = memory + float(current_value)
 
-    global equal_lts_button
-    equal_lts_button = True
+        MainInput.delete(0, END)
+        MainInput.insert(0, str(memory))
 
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 def handle_memory_minus():
-    current_value = MainInput.get()
+    try:
 
-    memory_sign_text.set('M')
+        current_value = MainInput.get()
 
-    global memory
+        memory_sign_text.set('M')
 
-    print(float(current_value))
-    print(memory)
+        global memory
 
-    memory = memory - float(current_value)
+        print(float(current_value))
+        print(memory)
 
-    MainInput.delete(0, END)
-    MainInput.insert(0, str(memory))
+        memory = memory - float(current_value)
 
-    global equal_lts_button
-    equal_lts_button = True
+        MainInput.delete(0, END)
+        MainInput.insert(0, str(memory))
 
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 def handle_memory_clean():
-    global memory
-    memory_sign_text.set('')
-    memory = 0
+    try:
 
+        global memory
+        memory_sign_text.set('')
+        memory = 0
 
+    except:
+        print('error')
 def handle_memory_registry():
-    MainInput.delete(0, END)
-    MainInput.insert(0, str(memory))
+    try:
 
-    global equal_lts_button
-    equal_lts_button = True
+        MainInput.delete(0, END)
+        MainInput.insert(0, str(memory))
 
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 def validate_entry(s):
     operators = ['+', '-', '/', 'x', '.']
@@ -181,137 +220,204 @@ def validate_entry(s):
 
 
 def handle_raised_two():
-    current_value = MainInput.get()
+    try:
 
-    MainInput.delete(0, END)
+        current_value = MainInput.get()
 
-    MainInput.insert(0, math.pow(float(current_value), 2))
+        MainInput.delete(0, END)
 
-    global equal_lts_button
-    equal_lts_button = True
+        MainInput.insert(0, math.pow(float(current_value), 2))
+
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 
 def handle_raised_three():
-    current_value = MainInput.get()
+    try:
 
-    MainInput.delete(0, END)
+        current_value = MainInput.get()
 
-    MainInput.insert(0, math.pow(float(current_value), 2))
+        MainInput.delete(0, END)
 
-    global equal_lts_button
-    equal_lts_button = True
+        MainInput.insert(0, math.pow(float(current_value), 2))
 
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 def handle_raised_number_to_number():
-    first_number = MainInput.get()
+    try:
 
-    global f_number
-    global math_type
-    math_type = "raised"
-    f_number = float(first_number)
+        first_number = MainInput.get()
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
+        global f_number
+        global math_type
+        math_type = "raised"
+        f_number = float(first_number)
 
+        MainInput.delete(0, END)
+        global equal_lts_button
+        equal_lts_button = False
+    except:
+        print('error')
 
 def handle_ten_raised():
-    current_value = MainInput.get()
+    try:
 
-    MainInput.delete(0, END)
+        current_value = MainInput.get()
 
-    print(math.pow(float(current_value), 3))
-    MainInput.insert(0, math.pow(10, float(current_value)))
+        MainInput.delete(0, END)
 
-    global equal_lts_button
-    equal_lts_button = True
+        print(math.pow(float(current_value), 3))
+        MainInput.insert(0, math.pow(10, float(current_value)))
+
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 
 def handle_one_split_to():
-    first_number = MainInput.get()
+    try:
 
-    global f_number
-    global math_type
-    math_type = "one_split"
-    f_number = float(first_number)
+        first_number = MainInput.get()
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
+        global f_number
+        global math_type
+        math_type = "one_split"
+        f_number = float(first_number)
 
+        MainInput.delete(0, END)
+        global equal_lts_button
+        equal_lts_button = False
+    except:
+        print('error')
 
 def handle_square(square_type: float):
-    current_value = float(MainInput.get())
+    try:
+        current_value = float(MainInput.get())
 
-    MainInput.delete(0, END)
+        MainInput.delete(0, END)
 
-    MainInput.insert(0, str(math.pow(current_value, (1. / square_type))))
+        MainInput.insert(0, str(math.pow(current_value, (1. / square_type))))
 
-    global equal_lts_button
-    equal_lts_button = True
-
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 def handle_square_number():
-    first_number = MainInput.get()
+    try:
+        first_number = MainInput.get()
 
-    global f_number
-    global math_type
-    math_type = "square_num"
-    f_number = float(first_number)
+        global f_number
+        global math_type
+        math_type = "square_num"
+        f_number = float(first_number)
 
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
-
+        MainInput.delete(0, END)
+        global equal_lts_button
+        equal_lts_button = False
+    except:
+        print('error')
 
 def handle_angle(angle_type: str):
-    current_value = float(MainInput.get())
+    try:
+        current_value = float(MainInput.get())
 
-    MainInput.delete(0, END)
-    print(angle_type)
-    match angle_type:
-        case 'sin':
-            MainInput.insert(0, str(math.sin(math.radians(current_value))))
-        case 'cos':
-            MainInput.insert(0, str(math.cos(math.radians(current_value))))
-        case 'tan':
-            MainInput.insert(0, str(math.tan(math.radians(current_value))))
-        case 'sinh':
-            MainInput.insert(0, str(math.sinh(current_value)))
-        case 'cosh':
-            MainInput.insert(0, str(math.cosh(current_value)))
-        case 'tanh':
-            MainInput.insert(0, str(math.tanh(current_value)))
+        MainInput.delete(0, END)
+        print(angle_type)
+        match angle_type:
+            case 'sin':
+                MainInput.insert(0, str(math.sin(math.radians(current_value))))
+            case 'cos':
+                MainInput.insert(0, str(math.cos(math.radians(current_value))))
+            case 'tan':
+                MainInput.insert(0, str(math.tan(math.radians(current_value))))
+            case 'sinh':
+                MainInput.insert(0, str(math.sinh(current_value)))
+            case 'cosh':
+                MainInput.insert(0, str(math.cosh(current_value)))
+            case 'tanh':
+                MainInput.insert(0, str(math.tanh(current_value)))
 
-    global equal_lts_button
-    equal_lts_button = True
-
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
 
 def handle_log():
-    current_value = float(MainInput.get())
+    try:
+        current_value = float(MainInput.get())
 
-    MainInput.delete(0, END)
+        MainInput.delete(0, END)
 
-    MainInput.insert(0, math.log10(current_value))
+        MainInput.insert(0, math.log10(current_value))
 
-    global equal_lts_button
-    equal_lts_button = True
+        global equal_lts_button
+        equal_lts_button = True
 
+    except:
+        print('error')
 
 def handle_log_base():
-    first_number = MainInput.get()
+    try:
 
-    global f_number
-    global math_type
-    math_type = "log"
-    f_number = float(first_number)
+        first_number = MainInput.get()
 
-    MainInput.delete(0, END)
-    global equal_lts_button
-    equal_lts_button = False
+        global f_number
+        global math_type
+        math_type = "log"
+        f_number = float(first_number)
+
+        MainInput.delete(0, END)
+        global equal_lts_button
+        equal_lts_button = False
+
+    except:
+        print('error')
+def handle_percent():
+    try:
+        global f_number
 
 
+        global second_number
+
+        result = f_number * second_number / 100
+
+        MainInput.delete(0, END)
+
+        MainInput.insert(0, str(result))
+
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
+
+
+def handle_AC():
+    try:
+        MainInput.delete(0, END)
+        MainInput.insert(0, '0')
+        global equal_lts_button
+        equal_lts_button = True
+    except:
+        print('error')
+
+
+def handle_sinal():
+    try:
+        current_value = float(MainInput.get())
+
+        MainInput.delete(0, END)
+
+        MainInput.insert(0, str(current_value * -1))
+    except:
+        print('error')
 vcm = (root.register(validate_entry), "%S")
 
 
@@ -392,7 +498,7 @@ button_9 = Button(root, numeric_button_style, text="9", command=lambda: handle_b
 
 #Special Buttons
 clear_button = Button(root, numeric_button_style, text="Clear", command=handle_clear_button)
-eq_segundo_gr = Button(root, numeric_button_style, text="Eq 2", command=lambda: handle_button_click(0))
+off_button = Button(root, numeric_button_style, text="Off", command= handle_off)
 
 #Op buttons
 add_button = Button(root, operator_button_style, text="+",  command=handle_add_button)
@@ -402,9 +508,9 @@ multiply_button = Button(root, operator_button_style, text="x",  command=handle_
 equal_button = Button(root, operator_button_style, text="=", command=handle_equal)
 
 #Main buttons
-on_off_button = Button(root, main_button_style, text="AC")
-percent_button = Button(root, main_button_style, text="%")
-change_operator_button = Button(root, main_button_style, text="+/-")
+ac_button = Button(root, main_button_style, text="AC", command=handle_AC)
+percent_button = Button(root, main_button_style, text="%", command=handle_percent)
+change_operator_button = Button(root, main_button_style, text="+/-", command=handle_sinal)
 
 #Sci buttons
 
@@ -445,7 +551,7 @@ memory_clear.grid(row=1, column=0)
 memory_plus.grid(row=1, column=1)
 memory_minus.grid(row=1, column=2)
 memory_recall.grid(row=1, column=3)
-on_off_button.grid(row=1, column=4)
+ac_button.grid(row=1, column=4)
 percent_button.grid(row=1, column=5)
 change_operator_button.grid(row=1, column=6)
 divide_button.grid(row=1, column=7)
@@ -481,7 +587,7 @@ sinh.grid(row=5, column=0)
 cosh.grid(row=5, column=1)
 tanh.grid(row=5, column=2)
 log_base_diff.grid(row=5, column=3)
-eq_segundo_gr.grid(row=5, column=4)
+off_button.grid(row=5, column=4)
 button_0.grid(row=5, column=5)
 clear_button.grid(row=5, column=6)
 equal_button.grid(row=5, column=7)
